@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_complete_guide/providers/cart.dart';
 import 'package:flutter_complete_guide/providers/product.dart';
 import 'package:flutter_complete_guide/screens/product_details_screen.dart';
 import 'package:provider/provider.dart';
 
-class ProductItem extends StatelessWidget {
-  // const ProductItem(this.id, this.title, this.imageUrl, {Key key})
-  //     : super(key: key);
-  // final String id;
-  // final String title;
-  // final String imageUrl;
+class ProductItem extends StatefulWidget {
+  @override
+  State<ProductItem> createState() => _ProductItemState();
+}
 
+class _ProductItemState extends State<ProductItem> {
+  // const ProductItem(this.id, this.title, this.imageUrl, {Key key})
   @override
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -43,7 +45,9 @@ class ProductItem extends StatelessWidget {
             ),
           ),
           trailing: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              cart.addItem(product.id, product.price, product.title);
+            },
             icon: Icon(Icons.shopping_cart),
             color: Theme.of(context).accentColor,
           ),
