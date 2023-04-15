@@ -3,9 +3,11 @@ import 'package:flutter_complete_guide/providers/cart.dart';
 import 'package:flutter_complete_guide/providers/order.dart';
 import 'package:flutter_complete_guide/providers/products_provider.dart';
 import 'package:flutter_complete_guide/screens/cart_screen.dart';
+import 'package:flutter_complete_guide/screens/edit_product_screen.dart';
+import 'package:flutter_complete_guide/screens/order_screen.dart';
 import 'package:flutter_complete_guide/screens/product_details_screen.dart';
 import 'package:flutter_complete_guide/screens/product_overview_screen.dart';
-import 'package:flutter_complete_guide/widgets/app_drawar.dart';
+import 'package:flutter_complete_guide/screens/user_products_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(MyApp());
@@ -30,7 +32,9 @@ class MyApp extends StatelessWidget {
         routes: {
           ProductDetailsScreen.routeName: (context) => ProductDetailsScreen(),
           CartScreen.routName: (context) => CartScreen(),
-          AppDrawer.routName: (context) => AppDrawer(),
+          OrderScreen.routName: (context) => OrderScreen(),
+          UserProductsScreen.routName: (context) => UserProductsScreen(),
+          EditProductScreen.routName: (context) => EditProductScreen(),
         },
       ),
     );

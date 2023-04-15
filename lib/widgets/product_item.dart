@@ -47,6 +47,14 @@ class _ProductItemState extends State<ProductItem> {
           trailing: IconButton(
             onPressed: () {
               cart.addItem(product.id, product.price, product.title);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("Item added to cart"),
+                action: SnackBarAction(
+                    label: "UNDO",
+                    onPressed: () {
+                      cart.removeSingelItem(product.id);
+                    }),
+              ));
             },
             icon: Icon(Icons.shopping_cart),
             color: Theme.of(context).accentColor,

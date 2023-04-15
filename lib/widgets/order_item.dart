@@ -1,13 +1,22 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../providers/order.dart' as ord;
+import '../providers/order.dart';
 
-class OrderItemO extends StatelessWidget {
+class OrderItemO extends StatefulWidget {
   const OrderItemO({
     Key key,
     this.order,
   }) : super(key: key);
-  final ord.OrderItem order;
+  final OrderItem order;
+
+  @override
+  State<OrderItemO> createState() => _OrderItemOState();
+}
+
+class _OrderItemOState extends State<OrderItemO> {
+  var _expanded = false;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -15,13 +24,42 @@ class OrderItemO extends StatelessWidget {
       child: Column(
         children: [
           ListTile(
-            title: Text("\$${order.amount}"),
+            title: Text("\$${widget.order.amount}"),
             subtitle: Text(
-              DateFormat("dd MM yyyy hh:mm").format(order.date),
+              DateFormat("dd/MM/yyyy hh:mm").format(widget.order.date),
             ),
-            trailing:
-                IconButton(onPressed: () {}, icon: Icon(Icons.expand_more)),
+            trailing: IconButton(
+                onPressed: () {
+                  setState(() {
+                    _expanded = !_expanded;
+                  });
+                },
+                icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more)),
           ),
+          if (_expanded)
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              height: (min(widget.order.products.length * 20.0 + 40, 180)),
+              child: ListView(
+                children: widget.order.products
+                    .map((prod) => Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              prod.title,
+                              style: TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "\$${prod.price} x ${prod.quantity}",
+                              style:
+                                  TextStyle(fontSize: 18, color: Colors.grey),
+                            ),
+                          ],
+                        ))
+                    .toList(),
+              ),
+            )
         ],
       ),
     );
